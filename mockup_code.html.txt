@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mockup ERUA App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+          theme: {
+            extend: {
+              colors: {
+                alliance: {
+                  primary: '#102A7C',    
+                  action: '#1D4ED8',     
+                  accent: '#6E8EE9',     
+                  success: '#39E2A0',    
+                  highlight: '#F4A300',  
+                }
+              }
+            }
+          }
+        }
+      </script>
+
+    <style>
+        .hide-scroll::-webkit-scrollbar { display: none; }
+        .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+        .fade-in { animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .nav-active { color: #102A7C !important; }
+        .scale-in { animation: scaleIn 0.2s ease-out; }
+        @keyframes scaleIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .heart-pop { animation: heartPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        @keyframes heartPop { 0% { transform: scale(1); } 50% { transform: scale(1.3); } 100% { transform: scale(1); } }
+        .slide-up-screen { animation: slideUpScreen 0.3s ease-out; }
+        @keyframes slideUpScreen { from { transform: translateY(100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .toast-enter { animation: toastEnter 0.5s ease-out forwards; }
+        @keyframes toastEnter { from { transform: translateY(100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .toast-exit { animation: toastExit 0.5s ease-in forwards; }
+        @keyframes toastExit { from { transform: translateY(0); opacity: 1; } to { transform: translateY(100%); opacity: 0; } }
+    </style>
+</head>
+<body class="bg-gray-100 flex justify-center items-center min-h-screen font-sans">
+
+    <div class="bg-white w-[375px] h-[812px] rounded-[40px] shadow-2xl overflow-hidden relative border-[10px] border-gray-900 flex flex-col">
+
+        <header id="main-header" class="flex justify-between items-center p-4 border-b bg-white z-10">
+            <h1 class="text-xl font-extrabold tracking-tighter text-alliance-primary" id="header-title">ERUA APP</h1>
+            <div class="flex gap-4">
+                <div id="icons-default" class="flex gap-4">
+                    <button onclick="switchView('notifications')" class="text-gray-600 hover:text-alliance-primary relative">
+                        <span class="material-icons">notifications_none</span>
+                        <span class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full border border-white"></span>
+                    </button>
+                    <button onclick="switchView('messages')" class="text-gray-600 hover:text-alliance-primary">
+                        <span class="material-icons">chat_bubble_outline</span>
+                    </button>
+                </div>
+                <button id="icon-settings" onclick="toggleSettingsMenu()" class="hidden text-gray-600 hover:text-alliance-primary transition-colors">
+                    <span class="material-icons">settings</span>
+                </button>
+            </div>
+        </header>
+
+        <main class="flex-1 overflow-y-auto hide-scroll bg-white relative z-0">
+
+            <div id="view-home" class="view-section fade-in p-3">
+                <div id="new-posts-container"></div>
+
+                <article class="bg-white mb-5 rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+                    <div class="bg-alliance-primary/5 p-3 border-l-4 border-alliance-primary flex items-center">
+                        <div class="w-10 h-10 rounded-full bg-alliance-primary text-white flex items-center justify-center font-bold text-xs">MRU</div>
+                        <div class="ml-3">
+                            <div class="flex items-center gap-1">
+                                <span class="font-bold text-sm text-gray-900">Mykolas Romeris University</span>
+                                <span class="material-icons text-alliance-primary text-[16px]">verified</span>
+                            </div>
+                            <p class="text-xs text-alliance-primary font-medium">Official Account</p>
+                        </div>
+                    </div>
+                    <div class="bg-gray-100 h-64 flex items-center justify-center text-gray-400 font-medium">[INSTITUTIONAL PHOTO]</div>
+                    <div class="p-4">
+                        <p class="text-sm text-gray-800"><span class="font-bold text-black">MRU:</span> Starting the ERUA Summit in Lesvos!!!</p>
+                    </div>
+                </article>
+
+                <article class="bg-white mb-5 rounded-xl border border-gray-100 shadow-sm overflow-hidden p-5 relative">
+                    <span class="absolute top-4 right-4 text-gray-200 material-icons text-4xl transform rotate-12">article</span>
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 rounded-full bg-alliance-accent/20 flex items-center justify-center text-alliance-primary font-bold">SP</div>
+                        <div class="ml-3">
+                            <span class="font-bold text-sm block text-gray-900">Sophie Pierre</span>
+                            <span class="text-xs text-gray-500">Paris 8 University</span>
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <h3 class="font-bold text-lg text-alliance-primary mb-2 leading-tight">Travelling Seminar Idea</h3>
+                        <p class="text-sm text-gray-600 leading-relaxed">
+                            I was thinking with soma collegues from Las Palmas that it would be very interesting to do a travelling seminar related to how can we use AI in large organizations or alliances to ensure data protection and security.
+                        </p>
+                    </div>
+                    <div class="flex items-center justify-between mt-3 pt-3 border-t border-gray-50">
+                        <button onclick="openArticle()" class="text-xs text-alliance-action font-semibold cursor-pointer hover:underline text-left">Read whole article...</button>
+                        <span class="text-xs text-gray-400">Lecture of 3 mins</span>
+                    </div>
+                    <div class="flex gap-4 mt-3 items-center">
+                        <button onclick="toggleLike(this)" class="group flex items-center gap-1">
+                            <span class="material-icons text-gray-400 text-sm group-hover:text-alliance-success transition-colors">favorite_border</span>
+                            <span class="like-count text-xs text-gray-500 font-medium">42</span>
+                        </button>
+                        <button onclick="openComments('post_sophie')" class="flex items-center gap-1 hover:text-alliance-action">
+                            <span class="material-icons text-gray-400 text-sm">mode_comment</span>
+                            <span id="count-post_sophie" class="text-xs text-gray-500 font-medium">1</span>
+                        </button>
+                        <span class="material-icons text-gray-400 text-sm ml-auto hover:text-gray-600 cursor-pointer">share</span>
+                    </div>
+                </article>
+
+                <article class="bg-white mb-4 rounded-xl border border-gray-100 shadow-sm overflow-hidden">
+                    <div class="flex items-center p-3">
+                        <div class="w-10 h-10 rounded-full bg-gray-200"></div>
+                        <div class="ml-3">
+                            <span class="font-bold text-sm block text-gray-900">Javier Martín</span>
+                            <span class="text-xs text-gray-500">ULPGC</span>
+                        </div>
+                    </div>
+                    <div class="bg-gray-100 h-80 flex items-center justify-center text-gray-400">[ACTIVITY PHOTO]</div>
+                    <div class="p-4">
+                         <div class="flex gap-4 mb-3 items-center">
+                            <button onclick="toggleLike(this)" class="group flex items-center gap-1">
+                                <span class="material-icons text-gray-700 group-hover:text-alliance-success transition-colors">favorite_border</span>
+                                <span class="like-count text-xs text-gray-900 font-medium">128</span>
+                            </button>
+                            <button onclick="openComments('post_javier')" class="flex items-center gap-1">
+                                <span class="material-icons text-gray-700">mode_comment</span>
+                                <span id="count-post_javier" class="text-xs text-gray-900 font-medium">0</span>
+                            </button>
+                        </div>
+                        <p class="text-sm text-gray-800"><span class="font-bold text-black">Javier Martín</span> Enjoying with the Macerata Team in Las Palmas 🍻🍻🍻</p>
+                    </div>
+                </article>
+            </div>
+
+            <div id="view-search" class="view-section hidden fade-in">
+                 <div class="p-3 bg-white sticky top-0 z-10">
+                    <div class="bg-gray-100 rounded-xl p-2 flex items-center px-4">
+                        <span class="material-icons text-gray-400 mr-3">search</span>
+                        <input id="search-input" onkeyup="simulateSearch()" type="text" placeholder="Try 'Hackathon'..." class="bg-transparent w-full text-sm outline-none text-gray-700">
+                    </div>
+                </div>
+                <div id="search-grid" class="grid grid-cols-3 gap-1 p-1">
+                    <div class="aspect-square bg-gray-200 rounded-md"></div>
+                    <div class="aspect-square bg-gray-300 rounded-md"></div>
+                    <div class="aspect-square bg-gray-200 rounded-md"></div>
+                    <div id="highlight-post" class="aspect-square bg-alliance-highlight col-span-2 row-span-2 flex flex-col items-center justify-center text-center p-4 rounded-md">
+                        <span class="material-icons text-white mb-2">trending_up</span>
+                        <p class="text-sm font-bold text-white leading-tight">Trending: ERUA Hackathon</p>
+                    </div>
+                    <div class="aspect-square bg-gray-300 rounded-md"></div>
+                </div>
+            </div>
+
+            <div id="view-messages" class="view-section hidden fade-in">
+                <div class="flex border-b border-gray-100 bg-white">
+                    <button id="tab-btn-principal" onclick="openMsgTab('principal')" class="flex-1 p-4 text-sm font-bold text-alliance-primary border-b-2 border-alliance-primary transition-all">Principal</button>
+                    <button id="tab-btn-requests" onclick="openMsgTab('requests')" class="flex-1 p-4 text-sm text-gray-400 font-medium relative transition-all">
+                        Solicitudes
+                        <span id="notification-dot" class="absolute top-3 right-8 w-2 h-2 bg-red-500 rounded-full"></span>
+                    </button>
+                </div>
+                <div class="p-4">
+                    <div id="msg-content-principal" class="fade-in">
+                         <button id="chat-item-Sofi_Tsolova" onclick="openChat('Sofi Tsolova')" class="w-full flex items-center gap-3 py-2 border-b border-gray-50 pb-4 text-left hover:bg-gray-50 transition-colors">
+                            <div class="w-12 h-12 rounded-full bg-alliance-accent/30"></div>
+                            <div class="flex-1 overflow-hidden">
+                                <h4 class="font-bold text-sm text-gray-900">Sofi Tsolova</h4>
+                                <p id="preview-Sofi_Tsolova" class="text-sm text-gray-500 truncate">How's the magazine article coming along?</p>
+                            </div>
+                            <span id="time-Sofi_Tsolova" class="text-xs text-gray-400 whitespace-nowrap">10:05</span>
+                        </button>
+                        <div id="new-chat-container"></div>
+                    </div>
+                    
+                    <div id="msg-content-requests" class="hidden fade-in">
+                        <div id="request-card-alexandra" class="bg-white p-4 rounded-xl border border-gray-100 shadow-sm mb-6 transition-all duration-500">
+                            <p class="text-xs text-alliance-primary font-bold mb-3 uppercase tracking-wider">Contact Request</p>
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="w-12 h-12 rounded-full bg-gray-200 border-2 border-white shadow-sm"></div>
+                                <div>
+                                    <h4 class="font-bold text-sm text-gray-900">Alexandra Petrova</h4>
+                                    <p class="text-xs text-gray-500">PHD student at NBU</p>
+                                </div>
+                            </div>
+                            <div id="request-actions" class="flex gap-3">
+                                <button onclick="acceptRequest()" class="flex-1 bg-alliance-success hover:bg-opacity-90 text-white text-sm font-bold py-2.5 rounded-lg transition-colors">Accept</button>
+                                <button onclick="ignoreRequest()" class="flex-1 bg-gray-100 text-gray-600 text-sm font-bold py-2.5 rounded-lg hover:bg-gray-200 transition-colors">Ignore</button>
+                            </div>
+                        </div>
+                        <div id="no-requests-msg" class="hidden text-center text-gray-400 mt-10">
+                            <span class="material-icons text-4xl mb-2">inbox</span>
+                            <p class="text-sm">No pending requests</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="view-profile" class="view-section hidden fade-in">
+                <div class="bg-white p-6">
+                    <div class="flex flex-col items-center">
+                        <div class="w-28 h-28 rounded-full bg-gradient-to-tr from-alliance-primary to-alliance-accent p-1 mb-4">
+                             <div class="w-full h-full rounded-full bg-gray-100 border-4 border-white"></div>
+                        </div>
+                        <h2 class="text-xl font-bold text-gray-900">Javier Martín</h2>
+                        <div class="mt-2 flex items-center bg-alliance-primary/10 px-3 py-1.5 rounded-full">
+                            <span class="text-lg mr-2">🎓</span>
+                            <span class="text-sm text-alliance-primary font-bold">Universidad de Las Palmas de Gran Canaria</span>
+                        </div>
+                        <div class="flex gap-10 mt-8 text-center w-full justify-center">
+                            <div><b class="block text-xl text-gray-900">142</b><span class="text-sm text-gray-500 font-medium">Posts</span></div>
+                            <div><b class="block text-xl text-gray-900">1.5k</b><span class="text-sm text-gray-500 font-medium">Seguidores</span></div>
+                            <div><b id="profile-following-count" class="block text-xl text-gray-900">300</b><span class="text-sm text-gray-500 font-medium">Siguiendo</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-3 gap-0.5 border-t border-gray-100">
+                    <div class="aspect-square bg-gray-100"></div>
+                    <div class="aspect-square bg-gray-200"></div>
+                    <div class="aspect-square bg-gray-100"></div>
+                </div>
+            </div>
+
+            <div id="view-notifications" class="view-section hidden fade-in">
+                <div class="p-4">
+                    <h3 class="font-bold text-lg mb-4 text-gray-900">Esta semana</h3>
+                    <div id="notif-row-elena" class="flex items-center gap-3 mb-4 transition-all duration-500">
+                        <div class="w-10 h-10 rounded-full bg-gray-200"></div>
+                        <div class="flex-1 text-sm">
+                            <span class="font-bold text-gray-900">Elena Torres</span>
+                            <span class="text-gray-600">started following you.</span>
+                        </div>
+                        <button onclick="acceptFollow(this)" class="text-xs bg-alliance-action text-white px-3 py-1.5 rounded-lg font-bold transition-colors">Follow</button>
+                    </div>
+                    
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 rounded-full bg-alliance-primary text-white flex items-center justify-center font-bold text-xs">UAM</div>
+                        <div class="flex-1 text-sm">
+                            <span class="font-bold text-gray-900">UAM Oficial</span>
+                            <span class="text-gray-600">posted a new event.</span>
+                        </div>
+                        <div class="w-10 h-10 bg-gray-200 rounded"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="view-create-photo" class="view-section hidden slide-up-screen bg-white h-full flex flex-col">
+                <div class="flex justify-between items-center p-4 border-b">
+                    <button onclick="cancelCreation()" class="text-gray-900 font-medium">Cancel</button>
+                    <h3 class="font-bold text-lg">New Post</h3>
+                    <button onclick="publishContent('photo')" class="text-alliance-action font-bold">Share</button>
+                </div>
+                <div class="p-4 flex-1">
+                    <div class="flex gap-4 mb-4">
+                        <div class="w-24 h-24 bg-gray-200 rounded-md flex items-center justify-center text-gray-400">
+                            <span class="material-icons">image</span>
+                        </div>
+                        <textarea id="photo-caption" class="flex-1 resize-none outline-none text-sm p-2 text-gray-700 h-24" placeholder="Write a caption..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div id="view-create-blog" class="view-section hidden slide-up-screen bg-white h-full flex flex-col">
+                <div class="flex justify-between items-center p-4 border-b">
+                    <button onclick="cancelCreation()" class="text-gray-900 font-medium">Close</button>
+                    <h3 class="font-bold text-lg text-alliance-primary">Write Article</h3>
+                    <button onclick="publishContent('blog')" class="text-alliance-action font-bold">Publish</button>
+                </div>
+                <div class="p-5 flex-1 overflow-y-auto">
+                    <input id="blog-title" type="text" placeholder="Title" class="w-full text-2xl font-bold mb-4 outline-none placeholder-gray-300 text-gray-900">
+                    <textarea id="blog-body" class="w-full h-full resize-none outline-none text-base text-gray-600 leading-relaxed placeholder-gray-300" placeholder="Tell your story..."></textarea>
+                </div>
+            </div>
+
+        </main>
+
+        <div id="view-article-reader" class="view-section hidden slide-up-screen bg-white h-full absolute inset-0 z-50 flex flex-col">
+            <div class="flex justify-between items-center p-4 border-b bg-white/95 backdrop-blur sticky top-0 z-50">
+                <button onclick="closeOverlay('view-article-reader')" class="text-gray-900 flex items-center">
+                    <span class="material-icons">arrow_back</span>
+                    <span class="ml-1 font-medium">Back</span>
+                </button>
+                <div class="flex gap-4">
+                    <span class="material-icons text-gray-500">bookmark_border</span>
+                    <span class="material-icons text-gray-500">share</span>
+                </div>
+            </div>
+            <div class="flex-1 overflow-y-auto p-6 pb-20">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 rounded-full bg-alliance-accent/20 flex items-center justify-center text-alliance-primary font-bold text-lg">SP</div>
+                    <div class="ml-4">
+                        <span class="font-bold text-base block text-gray-900">Sophie Pierre</span>
+                        <span class="text-xs text-gray-500">Paris 8 University • 3 min read</span>
+                    </div>
+                    <button class="ml-auto text-alliance-action font-bold text-sm bg-blue-50 px-3 py-1 rounded-full">Follow</button>
+                </div>
+                <h1 class="text-3xl font-extrabold text-alliance-primary mb-6 leading-tight">Travelling Seminar Idea: AI & Data Protection</h1>
+                <p class="text-lg text-gray-700 leading-relaxed mb-4">
+                    I was thinking with some colleagues from Las Palmas that it would be very interesting to do a travelling seminar related to how can we use AI in large organizations or alliances to ensure data protection and security.
+                </p>
+                <p class="text-lg text-gray-700 leading-relaxed mb-4">
+                    The core idea is to visit three different campuses within the ERUA Alliance to get diverse perspectives on the GDPR implementation. We often struggle with different interpretations of the same rules across borders.
+                </p>
+                <h3 class="text-xl font-bold text-gray-900 mt-6 mb-3">Proposed Itinerary</h3>
+                <p class="text-lg text-gray-700 leading-relaxed mb-4">
+                    We could start in <strong>Paris 8</strong>, discussing the theoretical framework and ethical implications. Then, we move to <strong>New Bulgarian University (NBU)</strong> to talk about the technical infrastructure required for secure federated learning.
+                </p>
+                <div class="bg-alliance-highlight/10 p-4 rounded-lg border-l-4 border-alliance-highlight my-6">
+                    <p class="text-gray-800 italic font-medium">"Innovation should never come at the cost of privacy. We need to build systems that are secure by design."</p>
+                </div>
+                <div class="flex gap-2 mt-8">
+                    <span class="bg-gray-100 text-gray-600 px-3 py-1 rounded text-sm">#AI</span>
+                    <span class="bg-gray-100 text-gray-600 px-3 py-1 rounded text-sm">#GDPR</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="view-comments" class="view-section hidden slide-up-screen bg-white h-full absolute inset-0 z-50 flex flex-col">
+            <div class="flex justify-between items-center p-4 border-b bg-white sticky top-0">
+                <button onclick="closeOverlay('view-comments')" class="text-gray-900 flex items-center">
+                    <span class="material-icons">arrow_back</span>
+                    <span class="ml-1 font-medium">Comments</span>
+                </button>
+            </div>
+            <div id="comments-list" class="flex-1 overflow-y-auto p-4 pb-20">
+                </div>
+            <div class="p-3 border-t bg-white flex items-center gap-2">
+                <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-alliance-primary to-alliance-accent"></div>
+                <input id="comment-input" type="text" placeholder="Add a comment..." class="flex-1 bg-gray-100 rounded-full px-4 py-2 text-sm outline-none">
+                <button onclick="postComment()" class="text-alliance-action font-bold text-sm px-2">Post</button>
+            </div>
+        </div>
+
+        <div id="view-chat-conversation" class="view-section hidden slide-up-screen bg-white h-full absolute inset-0 z-50 flex flex-col">
+            <div class="flex items-center p-3 border-b bg-white sticky top-0">
+                <button onclick="closeOverlay('view-chat-conversation')" class="mr-2 text-gray-900">
+                    <span class="material-icons">arrow_back</span>
+                </button>
+                <div class="w-8 h-8 rounded-full bg-alliance-accent/30 mr-3"></div>
+                <div class="flex-1">
+                    <h4 id="chat-user-name" class="font-bold text-sm text-gray-900">User</h4>
+                    <p id="chat-status" class="text-xs text-green-500 flex items-center gap-1">● Online</p>
+                </div>
+                <span class="material-icons text-gray-500">info_outline</span>
+            </div>
+            <div id="chat-messages" class="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
+                </div>
+            <div class="p-3 bg-white flex items-center gap-2 border-t">
+                <button class="text-gray-400 p-1"><span class="material-icons">add_circle</span></button>
+                <input id="chat-input" type="text" placeholder="Message..." class="flex-1 bg-gray-100 rounded-full px-4 py-2 text-sm outline-none">
+                <button onclick="sendMessage()" class="text-alliance-primary p-1"><span class="material-icons">send</span></button>
+            </div>
+        </div>
+
+        <div id="upload-modal" class="hidden absolute inset-0 bg-black/60 z-50 flex items-center justify-center p-6 fade-in">
+            <div class="absolute inset-0" onclick="toggleUploadMenu()"></div>
+            <div class="bg-white rounded-2xl w-full max-w-[320px] p-6 relative z-10 shadow-2xl scale-in">
+                <h3 class="text-center font-bold text-lg mb-6 text-gray-800">Create New Content</h3>
+                <button onclick="openCreator('create-photo')" class="w-full flex items-center p-4 mb-3 bg-gray-50 rounded-xl border border-gray-100 hover:bg-blue-50 transition-colors group">
+                    <div class="w-12 h-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center mr-4 group-hover:bg-alliance-primary group-hover:text-white transition-colors">
+                        <span class="material-icons">photo_camera</span>
+                    </div>
+                    <div><span class="block font-bold text-gray-800 text-left">Upload Photo</span></div>
+                </button>
+                <button onclick="openCreator('create-blog')" class="w-full flex items-center p-4 bg-gray-50 rounded-xl border border-gray-100 hover:bg-alliance-highlight/10 hover:border-alliance-highlight transition-colors group">
+                    <div class="w-12 h-12 rounded-full bg-yellow-100 text-yellow-600 flex items-center justify-center mr-4 group-hover:bg-alliance-highlight group-hover:text-white transition-colors">
+                        <span class="material-icons">article</span>
+                    </div>
+                    <div><span class="block font-bold text-gray-800 text-left">Write Blog</span></div>
+                </button>
+                <button onclick="toggleUploadMenu()" class="mt-6 w-full py-2 text-sm font-bold text-gray-400 hover:text-gray-600">Cancel</button>
+            </div>
+        </div>
+
+        <div id="settings-menu" class="hidden absolute top-16 right-4 bg-white rounded-xl shadow-xl border border-gray-100 z-50 w-48 fade-in">
+             <button class="w-full text-left px-4 py-3 hover:bg-gray-50 text-sm font-medium border-b flex items-center gap-2">
+                 <span class="material-icons text-gray-500 text-sm">edit</span> Edit Profile
+            </button>
+             <button class="w-full text-left px-4 py-3 hover:bg-red-50 text-sm font-bold text-red-500 flex items-center gap-2">
+                 <span class="material-icons text-sm">logout</span> Log Out
+            </button>
+        </div>
+
+        <div id="toast" class="hidden absolute bottom-24 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white px-6 py-3 rounded-full shadow-lg z-50 flex items-center gap-2">
+            <span class="material-icons text-alliance-success text-sm">check_circle</span>
+            <span id="toast-message" class="text-sm font-bold">Success</span>
+        </div>
+
+        <nav id="bottom-nav" class="bg-white border-t border-gray-100 flex justify-around items-center h-20 absolute bottom-0 w-full z-20 pb-4 transition-transform duration-300">
+            <button onclick="switchView('home', this)" class="nav-btn nav-active text-gray-400 flex flex-col items-center w-full h-full justify-center">
+                <span class="material-icons text-[28px]">home</span>
+            </button>
+            <button onclick="switchView('search', this)" class="nav-btn text-gray-400 flex flex-col items-center w-full h-full justify-center">
+                <span class="material-icons text-[28px]">search</span>
+            </button>
+            <button onclick="toggleUploadMenu()" class="text-alliance-primary flex flex-col items-center justify-center bg-alliance-primary/10 rounded-xl w-12 h-12 mt-[-20px] shadow-sm hover:bg-alliance-primary hover:text-white transition-colors">
+                <span class="material-icons text-[28px]">add</span>
+            </button>
+            <button onclick="switchView('messages', this)" class="nav-btn text-gray-400 flex flex-col items-center w-full h-full justify-center">
+                <span class="material-icons text-[28px]">mail_outline</span>
+            </button>
+            <button onclick="switchView('profile', this)" class="nav-btn text-gray-400 flex flex-col items-center w-full h-full justify-center">
+                <span class="material-icons text-[28px]">person_outline</span>
+            </button>
+        </nav>
+
+    </div>
+
+    <script>
+        // --- DATA STORE ---
+        const chatData = {
+            'Sofi Tsolova': [ { type: 'received', text: "How's the magazine article coming along?" } ],
+            'Alexandra Petrova': [ { type: 'received', text: "Hi! I saw you are from ULPGC. Can we connect?" } ]
+        };
+        
+        // SISTEMA DE COMENTARIOS INDEPENDIENTE
+        const postsData = {
+            'post_sophie': {
+                comments: [{ user: 'Maria_23', text: 'Great initiative! 👏👏', time: '2h ago' }],
+                countId: 'count-post_sophie'
+            },
+            'post_javier': {
+                comments: [],
+                countId: 'count-post_javier'
+            }
+        };
+
+        let currentChatUser = null;
+        let currentPostId = null;
+
+        // --- NOTIFICATIONS: FOLLOW BACK LOGIC ---
+        function acceptFollow(btn) {
+            // Visual change
+            btn.innerText = "Following";
+            btn.classList.remove('bg-alliance-action', 'text-white');
+            btn.classList.add('bg-gray-200', 'text-gray-600');
+            
+            // Update Profile Counter
+            const count = document.getElementById('profile-following-count');
+            count.innerText = parseInt(count.innerText) + 1;
+
+            // Remove notification after delay
+            const row = document.getElementById('notif-row-elena');
+            setTimeout(() => {
+                row.style.opacity = '0';
+                setTimeout(() => row.remove(), 500);
+            }, 1000);
+        }
+
+        // --- COMMENTS SYSTEM ---
+        function openComments(postId) {
+            currentPostId = postId;
+            document.getElementById('view-comments').classList.remove('hidden');
+            document.getElementById('bottom-nav').classList.add('hidden');
+            document.getElementById('main-header').classList.add('hidden');
+            
+            renderComments(postId);
+        }
+
+        function renderComments(postId) {
+            const list = document.getElementById('comments-list');
+            list.innerHTML = '';
+            
+            const comments = postsData[postId]?.comments || [];
+            
+            if (comments.length === 0) {
+                list.innerHTML = '<div class="text-center text-gray-400 mt-10 text-sm">No comments yet. Be the first!</div>';
+            } else {
+                comments.forEach(c => {
+                    list.innerHTML += `
+                        <div class="flex gap-3 mb-4">
+                             <div class="w-8 h-8 rounded-full bg-gray-200 flex-shrink-0"></div>
+                             <div>
+                                 <p class="text-sm"><span class="font-bold mr-1">${c.user}</span>${c.text}</p>
+                                 <span class="text-xs text-gray-400">${c.time}</span>
+                             </div>
+                        </div>`;
+                });
+            }
+        }
+
+        function postComment() {
+            const input = document.getElementById('comment-input');
+            const text = input.value;
+            if(text.trim() === "") return;
+
+            // Guardar en data
+            if (!postsData[currentPostId]) {
+                postsData[currentPostId] = { comments: [], countId: null };
+            }
+            postsData[currentPostId].comments.push({ user: 'Me', text: text, time: 'Just now' });
+            
+            renderComments(currentPostId);
+            input.value = "";
+            
+            // Actualizar contador en el feed
+            const countId = postsData[currentPostId].countId;
+            if (countId) {
+                const countSpan = document.getElementById(countId);
+                if(countSpan) countSpan.innerText = parseInt(countSpan.innerText) + 1;
+            }
+        }
+
+        // --- CHAT SYSTEM ---
+        function openChat(userName) {
+            currentChatUser = userName;
+            document.getElementById('view-chat-conversation').classList.remove('hidden');
+            document.getElementById('bottom-nav').classList.add('hidden');
+            document.getElementById('main-header').classList.add('hidden');
+            document.getElementById('chat-user-name').innerText = userName;
+            
+            renderMessages(userName);
+        }
+
+        function renderMessages(userName) {
+            const list = document.getElementById('chat-messages');
+            list.innerHTML = '';
+            const messages = chatData[userName] || [];
+            messages.forEach(msg => {
+                if(msg.type === 'received') {
+                    list.innerHTML += `<div class="flex gap-2 max-w-[80%]"><div class="w-8 h-8 rounded-full bg-alliance-accent/30 flex-shrink-0 mt-auto"></div><div class="bg-white p-3 rounded-2xl rounded-bl-none shadow-sm text-sm text-gray-800 border border-gray-100">${msg.text}</div></div>`;
+                } else {
+                    list.innerHTML += `<div class="flex gap-2 max-w-[80%] ml-auto justify-end"><div class="bg-alliance-primary p-3 rounded-2xl rounded-br-none shadow-md text-sm text-white">${msg.text}</div></div>`;
+                }
+            });
+            list.scrollTop = list.scrollHeight;
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const text = input.value;
+            if(text.trim() === "") return;
+
+            chatData[currentChatUser].push({ type: 'sent', text: text });
+            renderMessages(currentChatUser);
+            input.value = "";
+
+            const safeId = currentChatUser.replace(' ', '_');
+            const previewText = document.getElementById(`preview-${safeId}`);
+            const previewTime = document.getElementById(`time-${safeId}`);
+            const chatItem = document.getElementById(`chat-item-${safeId}`);
+
+            if(previewText) {
+                previewText.innerText = "You: " + text;
+                // NORMALIZAR ESTILO: Quitar estilo de "no leído" si existe
+                previewText.classList.remove('text-alliance-primary', 'font-bold');
+                previewText.classList.add('text-gray-500');
+            }
+            if(previewTime) previewTime.innerText = "Just now";
+            
+            // NORMALIZAR FONDO BOTÓN
+            if(chatItem) {
+                chatItem.classList.remove('bg-blue-50/50');
+                chatItem.classList.add('hover:bg-gray-50');
+            }
+
+            simulateReply();
+        }
+
+        function simulateReply() {
+            const status = document.getElementById('chat-status');
+            setTimeout(() => { status.innerHTML = `<span class="text-alliance-primary">typing...</span>`; }, 1000);
+            setTimeout(() => {
+                status.innerHTML = `<span class="text-green-500 flex items-center gap-1">● Online</span>`;
+                const replies = ["Sounds great!", "Let me check that.", "Awesome work! 👏", "Talk to you later!"];
+                const randomReply = replies[Math.floor(Math.random() * replies.length)];
+                chatData[currentChatUser].push({ type: 'received', text: randomReply });
+                renderMessages(currentChatUser);
+                const safeId = currentChatUser.replace(' ', '_');
+                const previewText = document.getElementById(`preview-${safeId}`);
+                if(previewText) previewText.innerText = randomReply;
+            }, 3000);
+        }
+
+        // --- PUBLISH & ID GENERATION ---
+        function publishContent(type) {
+            let htmlContent = "";
+            let msg = "";
+            const uniqueId = 'post_' + new Date().getTime(); // Generar ID único
+
+            if(type === 'blog') {
+                const title = document.getElementById('blog-title').value;
+                const body = document.getElementById('blog-body').value;
+                if(title.trim() === "") return alert("Please add a title");
+                
+                // Inicializar datos para comentarios
+                postsData[uniqueId] = { comments: [], countId: `count-${uniqueId}` };
+
+                htmlContent = `
+                <article class="bg-white mb-5 rounded-xl border border-gray-100 shadow-sm overflow-hidden p-5 relative scale-in">
+                    <span class="absolute top-4 right-4 text-gray-200 material-icons text-4xl transform rotate-12">article</span>
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-alliance-primary to-alliance-accent flex items-center justify-center text-white font-bold">ME</div>
+                        <div class="ml-3">
+                            <span class="font-bold text-sm block text-gray-900">Javier Martín</span>
+                            <span class="text-xs text-gray-500">ULPGC • Just now</span>
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <h3 class="font-bold text-lg text-alliance-primary mb-2 leading-tight">${title}</h3>
+                        <p class="text-sm text-gray-600 leading-relaxed">${body.substring(0, 100)}...</p>
+                    </div>
+                    <div class="flex gap-4 mt-3 items-center">
+                        <button onclick="toggleLike(this)" class="group flex items-center gap-1">
+                            <span class="material-icons text-gray-400 text-sm group-hover:text-alliance-success transition-colors">favorite_border</span>
+                            <span class="like-count text-xs text-gray-500 font-medium">0</span>
+                        </button>
+                        <button onclick="openComments('${uniqueId}')" class="flex items-center gap-1 hover:text-alliance-action">
+                            <span class="material-icons text-gray-400 text-sm">mode_comment</span>
+                            <span id="count-${uniqueId}" class="text-xs text-gray-500 font-medium">0</span>
+                        </button>
+                    </div>
+                </article>`;
+                msg = "Article published!";
+                document.getElementById('blog-title').value = "";
+                document.getElementById('blog-body').value = "";
+
+            } else if (type === 'photo') {
+                const caption = document.getElementById('photo-caption').value;
+                
+                postsData[uniqueId] = { comments: [], countId: `count-${uniqueId}` };
+
+                htmlContent = `
+                <article class="bg-white mb-4 rounded-xl border border-gray-100 shadow-sm overflow-hidden scale-in">
+                    <div class="flex items-center p-3">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-alliance-primary to-alliance-accent"></div>
+                        <div class="ml-3">
+                            <span class="font-bold text-sm block text-gray-900">Javier Martín</span>
+                            <span class="text-xs text-gray-500">ULPGC</span>
+                        </div>
+                    </div>
+                    <div class="bg-gray-100 h-64 flex items-center justify-center text-gray-400 flex-col">
+                        <span class="material-icons text-4xl mb-2">image</span>
+                        <span class="text-xs">[Uploaded Photo]</span>
+                    </div>
+                    <div class="p-4">
+                         <div class="flex gap-4 mb-3 items-center">
+                            <button onclick="toggleLike(this)" class="group flex items-center gap-1">
+                                <span class="material-icons text-gray-700 group-hover:text-alliance-success transition-colors">favorite_border</span>
+                                <span class="like-count text-xs text-gray-900 font-medium">0</span>
+                            </button>
+                            <button onclick="openComments('${uniqueId}')" class="flex items-center gap-1">
+                                <span class="material-icons text-gray-700">mode_comment</span>
+                                <span id="count-${uniqueId}" class="text-xs text-gray-900 font-medium">0</span>
+                            </button>
+                        </div>
+                        <p class="text-sm text-gray-800"><span class="font-bold text-black">Javier Martín</span> ${caption}</p>
+                    </div>
+                </article>`;
+                msg = "Photo shared!";
+                document.getElementById('photo-caption').value = "";
+            }
+
+            const container = document.getElementById('new-posts-container');
+            container.insertAdjacentHTML('afterbegin', htmlContent);
+            cancelCreation();
+            showToast(msg);
+        }
+
+        // --- BASIC UTILS ---
+        function switchView(viewName, btnElement) {
+            const sections = document.querySelectorAll('.view-section');
+            sections.forEach(sec => sec.classList.add('hidden'));
+            document.getElementById('view-' + viewName).classList.remove('hidden');
+            const buttons = document.querySelectorAll('.nav-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('nav-active');
+                btn.classList.add('text-gray-400');
+            });
+            if(btnElement) {
+                btnElement.classList.remove('text-gray-400');
+                btnElement.classList.add('nav-active');
+            }
+            const titles = { 'home': 'ERUA APP', 'search': 'EXPLORAR', 'messages': 'MENSAJES', 'profile': 'MI PERFIL', 'notifications': 'ACTIVIDAD' };
+            document.getElementById('header-title').innerText = titles[viewName];
+            const defaultIcons = document.getElementById('icons-default');
+            const settingsIcon = document.getElementById('icon-settings');
+            const settingsMenu = document.getElementById('settings-menu');
+            settingsMenu.classList.add('hidden'); 
+            if (viewName === 'profile') {
+                defaultIcons.classList.add('hidden');
+                settingsIcon.classList.remove('hidden');
+            } else {
+                defaultIcons.classList.remove('hidden');
+                settingsIcon.classList.add('hidden');
+            }
+        }
+        function toggleLike(btn) {
+            const icon = btn.querySelector('.material-icons');
+            const countSpan = btn.querySelector('.like-count');
+            let count = parseInt(countSpan.innerText);
+            if (icon.textContent === 'favorite_border') {
+                icon.textContent = 'favorite';
+                icon.classList.remove('text-gray-400', 'text-gray-700');
+                icon.classList.add('text-alliance-success', 'heart-pop');
+                countSpan.innerText = count + 1;
+                countSpan.classList.add('text-alliance-success');
+            } else {
+                icon.textContent = 'favorite_border';
+                icon.classList.remove('text-alliance-success', 'heart-pop');
+                icon.classList.add('text-gray-400');
+                countSpan.innerText = count - 1;
+                countSpan.classList.remove('text-alliance-success');
+            }
+        }
+        function closeOverlay(id) {
+            document.getElementById(id).classList.add('hidden');
+            document.getElementById('bottom-nav').classList.remove('hidden');
+            document.getElementById('main-header').classList.remove('hidden');
+        }
+        function toggleSettingsMenu() {
+            const menu = document.getElementById('settings-menu');
+            menu.classList.toggle('hidden');
+        }
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-message').innerText = message;
+            toast.classList.remove('hidden', 'toast-exit');
+            toast.classList.add('toast-enter');
+            setTimeout(() => {
+                toast.classList.remove('toast-enter');
+                toast.classList.add('toast-exit');
+                setTimeout(() => toast.classList.add('hidden'), 500);
+            }, 3000);
+        }
+        function openMsgTab(tabName) {
+            document.getElementById('msg-content-principal').classList.add('hidden');
+            document.getElementById('msg-content-requests').classList.add('hidden');
+            const btnPrincipal = document.getElementById('tab-btn-principal');
+            const btnRequests = document.getElementById('tab-btn-requests');
+            btnPrincipal.classList.remove('text-alliance-primary', 'border-b-2', 'border-alliance-primary');
+            btnPrincipal.classList.add('text-gray-400');
+            btnRequests.classList.remove('text-alliance-primary', 'border-b-2', 'border-alliance-primary');
+            btnRequests.classList.add('text-gray-400');
+            document.getElementById('msg-content-' + tabName).classList.remove('hidden');
+            const activeBtn = document.getElementById('tab-btn-' + tabName);
+            activeBtn.classList.remove('text-gray-400');
+            activeBtn.classList.add('text-alliance-primary', 'border-b-2', 'border-alliance-primary');
+        }
+        function acceptRequest() {
+            const actionContainer = document.getElementById('request-actions');
+            actionContainer.innerHTML = `<div class="w-full text-center bg-green-50 text-alliance-success font-bold py-2 rounded-lg scale-in flex items-center justify-center gap-2"><span class="material-icons text-sm">check_circle</span>Accepted</div>`;
+            document.getElementById('notification-dot').style.display = 'none';
+            setTimeout(() => {
+                document.getElementById('request-card-alexandra').classList.add('hidden');
+                document.getElementById('no-requests-msg').classList.remove('hidden');
+                const principalContainer = document.getElementById('msg-content-principal');
+                const newChatHTML = `<button id="chat-item-Alexandra_Petrova" onclick="openChat('Alexandra Petrova')" class="w-full flex items-center gap-3 py-2 border-b border-gray-50 pb-4 mt-4 scale-in bg-blue-50/50 p-2 rounded-lg text-left"><div class="w-12 h-12 rounded-full bg-gray-200 border border-alliance-primary"></div><div class="flex-1"><h4 class="font-bold text-sm text-gray-900">Alexandra Petrova</h4><p id="preview-Alexandra_Petrova" class="text-sm text-alliance-primary font-bold">You are now connected!</p></div><span id="time-Alexandra_Petrova" class="text-xs text-gray-400">Now</span></button>`;
+                principalContainer.insertAdjacentHTML('afterbegin', newChatHTML);
+                openMsgTab('principal');
+            }, 1000);
+        }
+        function ignoreRequest() {
+            const card = document.getElementById('request-card-alexandra');
+            const dot = document.getElementById('notification-dot');
+            const noReqMsg = document.getElementById('no-requests-msg');
+            card.style.transition = "all 0.5s ease"; card.style.opacity = "0"; card.style.transform = "translateX(100%)";
+            setTimeout(() => { card.style.display = 'none'; dot.style.display = 'none'; noReqMsg.classList.remove('hidden'); }, 500);
+        }
+        function toggleUploadMenu() {
+            const modal = document.getElementById('upload-modal');
+            modal.classList.toggle('hidden');
+        }
+        function openCreator(type) {
+            toggleUploadMenu();
+            const sections = document.querySelectorAll('.view-section');
+            sections.forEach(sec => sec.classList.add('hidden'));
+            document.getElementById('view-' + type).classList.remove('hidden');
+            document.getElementById('bottom-nav').classList.add('hidden');
+            document.getElementById('main-header').classList.add('hidden');
+        }
+        function cancelCreation() {
+            switchView('home');
+            document.getElementById('bottom-nav').classList.remove('hidden');
+            document.getElementById('main-header').classList.remove('hidden');
+        }
+        function openArticle() {
+            document.getElementById('view-article-reader').classList.remove('hidden');
+            document.getElementById('bottom-nav').classList.add('hidden');
+            document.getElementById('main-header').classList.add('hidden');
+        }
+        function closeArticle() {
+            document.getElementById('view-article-reader').classList.add('hidden');
+            document.getElementById('bottom-nav').classList.remove('hidden');
+            document.getElementById('main-header').classList.remove('hidden');
+        }
+        function simulateSearch() {
+            const input = document.getElementById('search-input');
+            const filter = input.value.toLowerCase();
+            const highlightPost = document.getElementById('highlight-post');
+            if (filter.length > 0 && !"hackathon".includes(filter)) {
+                highlightPost.classList.add('hidden');
+            } else {
+                highlightPost.classList.remove('hidden');
+            }
+        }
+    </script>
+</body>
+</html>
